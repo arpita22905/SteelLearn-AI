@@ -1,0 +1,45 @@
+{% extends 'steellearn_ai/base.html' %}
+{% load static %}
+
+{% block title %}
+SteelLearn AI
+{% endblock %}
+
+{% block content %}
+
+<div class="app">
+
+
+    {% include 'steellearn_ai/partials/sidebar.html' %}
+
+    <div class="main-container">
+
+        
+        {% include 'steellearn_ai/partials/navbar.html' %}
+
+        <div class="content-grid">
+
+           
+            <section class="chat-section">
+
+                {% include 'steellearn_ai/partials/chat_header.html' %}
+
+                {% include 'steellearn_ai/partials/chat_messages.html' %}
+
+                {% include 'steellearn_ai/partials/suggested_questions.html' %}
+
+                {% include 'steellearn_ai/partials/input_area.html' %}
+
+            </section>
+
+            {% include 'steellearn_ai/partials/right_panel.html' %}
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="{% static 'js/chat.js' %}"></script>
+
+{% endblock %}

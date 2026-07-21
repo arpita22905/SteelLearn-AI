@@ -1,0 +1,147 @@
+{% extends "steellearn_ai/base.html" %}
+
+{% block title %}
+AI Quiz
+{% endblock %}
+
+{% block content %}
+
+<div class="quiz-page">
+
+    
+
+    <div class="quiz-topbar">
+
+        <a href="{% url 'chat' %}" class="back-btn">
+            ← Back to Chat
+        </a>
+
+        <div class="quiz-logo">
+
+            <div class="logo-icon">
+                AI
+            </div>
+
+            <div>
+
+                <h2>SteelLearn AI</h2>
+
+                <span>AI Assistant Ready</span>
+
+            </div>
+
+        </div>
+
+        <a href="{% url 'document_library' %}" class="view-btn">
+            View Documents
+        </a>
+
+    </div>
+
+
+
+    <div class="quiz-header">
+
+        <div class="quiz-icon">
+            📝
+        </div>
+
+        <h1>
+            {{ document.title }}
+        </h1>
+
+        <h2>
+            AI Generated Quiz
+        </h2>
+
+    </div>
+
+
+    <div class="quiz-container">
+
+        {% for q in quiz %}
+
+        <div class="question-card">
+
+            <div class="question-number">
+                {{ forloop.counter }}
+            </div>
+
+            <div class="question-text">
+                {{ q.question }}
+            </div>
+
+            <div class="options">
+
+                {% for option in q.options %}
+
+                <button
+                    class="option-btn"
+                    data-correct="{% if forloop.counter0 == q.answer %}true{% else %}false{% endif %}">
+
+                    <span class="option-letter">
+
+                        {% if forloop.counter == 1 %}A{% endif %}
+                        {% if forloop.counter == 2 %}B{% endif %}
+                        {% if forloop.counter == 3 %}C{% endif %}
+                        {% if forloop.counter == 4 %}D{% endif %}
+
+                    </span>
+
+                    <span>
+                        {{ option }}
+                    </span>
+
+                </button>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+<script>
+
+document.querySelectorAll(".question-card").forEach(card=>{
+
+    const buttons=card.querySelectorAll(".option-btn");
+
+    buttons.forEach(btn=>{
+
+        btn.onclick=function(){
+
+            if(card.dataset.done) return;
+
+            card.dataset.done="true";
+
+            buttons.forEach(b=>{
+
+                if(b.dataset.correct==="true"){
+
+                    b.classList.add("correct");
+
+                }
+
+            });
+
+            if(btn.dataset.correct!=="true"){
+
+                btn.classList.add("wrong");
+
+            }
+
+        };
+
+    });
+
+});
+
+</script>
+
+{% endblock %}

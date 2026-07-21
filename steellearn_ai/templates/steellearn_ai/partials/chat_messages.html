@@ -1,0 +1,86 @@
+<div class="chat-messages" id="chatMessages">
+
+    
+    <div class="ai-message">
+
+        <div class="ai-avatar">
+
+            🤖
+
+        </div>
+
+        <div class="message-card welcome-card">
+
+            <h4>
+
+                Hello 👋
+
+            </h4>
+
+            <p>
+
+                I'm <strong>SteelLearn AI</strong>. Ask me anything about
+                industrial safety, PPE, SOPs, manufacturing or training.
+
+            </p>
+
+        </div>
+
+    </div>
+
+    
+
+    {% for message in messages %}
+
+        <!-- User -->
+
+        <div class="user-message">
+
+            <div class="message-card">
+
+                {{ message.question|linebreaks }}
+
+            </div>
+
+        </div>
+
+        
+
+        <div class="ai-message">
+
+            <div class="ai-avatar">
+
+                🤖
+
+            </div>
+
+            <div class="message-card">
+
+                {{ message.answer|linebreaks }}
+
+            </div>
+
+        </div>
+
+    {% empty %}
+
+        
+
+    {% endfor %}
+    <div id="typingIndicator" class="typing-indicator">
+
+    <div class="ai-avatar">
+        🤖
+    </div>
+
+    <div class="typing-bubble">
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+    </div>
+
+</div>
+
+</div>

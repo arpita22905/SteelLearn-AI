@@ -1,0 +1,92 @@
+{% extends "steellearn_ai/base.html" %}
+
+{% block title %}
+AI Summary
+{% endblock %}
+
+{% block content %}
+
+<div class="summary-page">
+
+    
+
+    <div class="summary-navbar">
+
+        <a href="{% url 'chat' %}" class="back-btn">
+
+            ← Back to Chat
+
+        </a>
+
+        <div class="summary-brand">
+
+            <div class="brand-icon">
+
+                AI
+
+            </div>
+
+            <div>
+
+                <h3>
+
+                    SteelLearn AI
+
+                </h3>
+
+                <span>
+
+                    AI Assistant Ready
+
+                </span>
+
+            </div>
+
+        </div>
+
+        <a href="#" class="view-btn">
+
+            View Document
+
+        </a>
+
+    </div>
+
+
+
+    <div class="summary-header">
+
+        <div class="summary-icon">
+
+            📄
+
+        </div>
+
+        <h1>
+
+            
+
+        </h1>
+
+        <h2>
+
+            AI Summary
+
+        </h2>
+
+    </div>
+
+    
+    <div class="summary-card">
+
+        <div class="summary-content">
+
+            {{ summary|safe }}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,195 @@
+<div class="right-panel">
+
+    <div class="workspace-card">
+
+        
+
+<div class="panel-title">
+    Current Document:
+</div>
+
+{% if latest_document %}
+
+<a href="{{ latest_document.file.url }}"
+   target="_blank"
+   class="document-link">
+
+    <div class="document-box">
+
+        <div class="document-icon">
+            📄
+        </div>
+
+        <div class="document-info">
+
+            <div class="document-name">
+                {{ latest_document.title }}
+            </div>
+
+            
+
+        </div>
+
+    </div>
+
+</a>
+
+{% else %}
+
+<div class="document-box">
+
+    <div class="document-icon">
+        📄
+    </div>
+
+    <div class="document-info">
+
+        <div class="document-name">
+            No document uploaded
+        </div>
+
+        <div class="document-meta">
+            Upload a PDF to begin
+        </div>
+
+    </div>
+
+</div>
+
+{% endif %}
+
+
+        <div class="workspace-divider"></div>
+
+        
+
+        <h2 class="workspace-heading">
+
+            AI Tools
+
+        </h2>
+
+        <div class="tool-list">
+
+           
+
+            <a href="{% url 'upload_document' %}" class="tool-card purple">
+
+                <div class="tool-left">
+
+                    <div class="tool-icon">
+
+                        ⤴
+
+                    </div>
+
+                    <div>
+
+                        <h4>
+
+                            Upload
+
+                        </h4>
+
+                        <p>
+
+                            Upload a new document
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="tool-arrow">
+
+                    →
+
+                </div>
+
+            </a>
+
+            {% if latest_document %}
+
+            
+
+            <a href="{% url 'summary' latest_document.id %}" class="tool-card blue">
+
+                <div class="tool-left">
+
+                    <div class="tool-icon">
+
+                        📄
+
+                    </div>
+
+                    <div>
+
+                        <h4>
+
+                            Summarize
+
+                        </h4>
+
+                        <p>
+
+                            AI summary of document
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="tool-arrow">
+
+                    →
+
+                </div>
+
+            </a>
+
+            
+            <a href="{% url 'document_quiz' latest_document.id %}" class="tool-card green">
+
+                <div class="tool-left">
+
+                    <div class="tool-icon">
+
+                        ?
+
+                    </div>
+
+                    <div>
+
+                        <h4>
+
+                            Quiz
+
+                        </h4>
+
+                        <p>
+
+                            Generate quiz from document
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="tool-arrow">
+
+                    →
+
+                </div>
+
+            </a>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>

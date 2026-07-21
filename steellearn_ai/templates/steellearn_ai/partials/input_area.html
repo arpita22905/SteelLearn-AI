@@ -1,0 +1,19 @@
+<div class="input-container">
+
+    <form method="POST" class="chat-input-form" id="chatForm">
+
+        {% csrf_token %}
+
+        <div class="input-wrapper">
+
+            {{ form.question }}
+
+            <button type="submit" class="send-btn">
+                ➤
+            </button>
+
+        </div>
+
+    </form>
+
+</div>

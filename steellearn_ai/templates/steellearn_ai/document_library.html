@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Document Library</title>
+</head>
+<body>
+
+<h1>SteelLearn AI - Document Library</h1>
+
+{% if documents %}
+
+    {% for document in documents %}
+
+        <div style="border:1px solid #ccc;padding:20px;margin:20px;border-radius:10px;">
+
+            <h3>{{ document.title }}</h3>
+
+            <p>
+                Uploaded:
+                {{ document.uploaded_at }}
+            </p>
+
+            <a href="{% url 'summary' document.id %}">
+              📄 Summarize
+            </a>
+
+            <br><br>
+
+            <a href="{% url 'document_quiz' document.id %}">
+             🧠 Generate Quiz
+            </a>
+
+        </div>
+
+    {% endfor %}
+
+{% else %}
+
+<h3>No documents uploaded.</h3>
+
+{% endif %}
+
+</body>
+</html>

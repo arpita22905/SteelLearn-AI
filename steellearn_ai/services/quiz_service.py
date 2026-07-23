@@ -14,42 +14,191 @@ client = Groq(
 def generate_quiz(text):
 
     prompt = f"""
-You are an AI Learning & Development assistant.
+You are an expert AI Learning &Development Assistant specializing in corporate training, industrial learning, technical documentation, compliance, and safety education.
 
-Generate exactly 10 multiple choice questions from the training document.
+Your task is to generate a professional multiple-choice assessment from the uploaded document.
+
+The uploaded document may be ANY type, including:
+
+• Safety manuals
+• SOPs
+• Machine manuals
+• Technical documentation
+• Manufacturing procedures
+• Employee handbooks
+• HR policies
+• Learning modules
+• Compliance documents
+• General educational material
+
+First understand the purpose, structure, and key concepts of the document before creating questions.
+
+The goal is to evaluate whether a learner actually understood the document—not whether they can memorize isolated facts.
+
+=========================
+Question Requirements
+=========================
+
+Generate questions that test:
+
+• Understanding
+• Application
+• Decision making
+• Best practices
+• Correct procedures
+• Safety awareness
+• Responsibilities
+• Cause and effect
+• Appropriate actions
+• Correct sequence of steps
+• Interpretation of document concepts
+
+Avoid questions that simply ask the user to copy a sentence from the document.
+
+=========================
+Difficulty Distribution
+=========================
+
+Generate approximately:
+
+• 30% Easy
+• 50% Medium
+• 20% Challenging
+
+The quiz should become gradually more difficult.
+
+=========================
+Distractor Quality
+=========================
+
+Every incorrect option must be:
+
+• Realistic
+• Plausible
+• Similar in wording and length to the correct answer
+• Related to the document topic
+• Able to mislead someone who only skimmed the document
+
+Do NOT create obviously wrong options such as:
+
+Casual clothes
+Shoes
+Bananas
+Cars
+Nothing
+
+Avoid humorous or absurd choices.
+
+The correct answer should require understanding of the document.
+
+=========================
+Document-specific Guidance
+=========================
+
+If the document is about safety:
+
+Focus on:
+
+• PPE
+• Hazards
+• Risk prevention
+• Emergency response
+• Safe operating procedures
+• Inspection requirements
+• Responsibilities
+• Best practices
+• Unsafe behaviours
+• Correct actions in different situations
+
+If the document is technical:
+
+Focus on:
+
+• Concepts
+• Components
+• Functions
+• Configuration
+• Troubleshooting
+• Best practices
+• Correct usage
+
+If the document is procedural:
+
+Focus on:
+
+• Correct order of steps
+• Required actions
+• Decision points
+• Preconditions
+• Common mistakes
+
+If the document is policy based:
+
+Focus on:
+
+• Responsibilities
+• Rules
+• Compliance
+• Appropriate actions
+• Violations
+• Employee obligations
+
+=========================
+Quality Rules
+=========================
+
+1. Use ONLY information contained in the document.
+2. Never invent facts.
+3. Ignore duplicate text.
+4. Ignore page numbers.
+5. Ignore formatting.
+6. Every question should assess an important concept.
+7. Avoid repeating the same idea in multiple questions.
+8. Every question must have exactly ONE correct answer.
+9. Every option should be similar in length.
+10. Avoid using words like "always" or "never" unless they appear in the document.
+11. Avoid giving away the answer through wording.
+12. Do not make the correct answer noticeably longer than the others.
+
+=========================
+Output Rules
+=========================
+
+Generate EXACTLY 10 questions whenever sufficient information exists.
+
+If the document is too short, generate fewer questions rather than inventing information.
 
 Return ONLY valid JSON.
 
-The format MUST be exactly:
+Format:
 
 [
   {{
-    "question":"What is PPE?",
+    "question":"Question text",
     "options":[
-      "Helmet",
-      "Gloves",
-      "Personal Protective Equipment",
-      "Shoes"
+      "Option A",
+      "Option B",
+      "Option C",
+      "Option D"
     ],
     "answer":2
   }}
 ]
 
-Rules:
+Where:
 
-- Generate exactly 10 questions.
-- Every question must have exactly 4 options.
-- answer must be the correct option index:
-  0 = first option
-  1 = second option
-  2 = third option
-  3 = fourth option
-- Questions should test understanding.
-- Use ONLY information present in the document.
-- Do NOT use markdown.
-- Do NOT explain anything.
-- Return ONLY valid JSON.
-- Do not wrap JSON inside ```.
+0 = first option
+1 = second option
+2 = third option
+3 = fourth option
+
+Do NOT return Markdown.
+
+Do NOT explain anything.
+
+Do NOT wrap JSON inside ```.
+
+Return ONLY valid JSON.
 
 Training Document:
 

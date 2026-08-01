@@ -9,6 +9,7 @@ from .services.summary_service import summarize_document
 from .models import TrainingDocument
 from .services.quiz_service import generate_quiz
 from django.http import JsonResponse
+from documents.rag.pipeline import RAGPipeline
 
 
 def home(request):
@@ -84,15 +85,24 @@ def upload_document(request):
 
         if form.is_valid():
 
+            # Save uploaded document
             document = form.save()
 
+            # Extract PDF text
             extracted_text = extract_text_from_pdf(
                 document.file.path
             )
 
+            # Save extracted text
             document.extracted_text = extracted_text
-
             document.save()
+
+            
+            pipeline = RAGPipeline()
+
+            pipeline.build_pipeline(
+                document.file.path
+            )
 
             return redirect("chat")
 
@@ -106,8 +116,6 @@ def upload_document(request):
         {
             "form": form,
         },
-
-
     )
 
 def summarize_pdf(request, document_id):

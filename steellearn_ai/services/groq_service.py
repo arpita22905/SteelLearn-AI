@@ -2,7 +2,8 @@ import os
 
 from groq import Groq
 from dotenv import load_dotenv
-from ..services.document_search import search_documents
+
+from documents.rag.retriever import DocumentRetriever
 
 load_dotenv()
 
@@ -12,30 +13,51 @@ client = Groq(
 
 
 def get_ai_response(question):
+    """
+    Generate AI response using RAG + Groq.
+    """
 
-   
-    document_context = search_documents(question)
+    try:
 
-    if document_context.strip():
+        retriever = DocumentRetriever()
+
+        retrieved_documents = retriever.retrieve(
+            query=question,
+            k=4
+        )
+
+    except Exception:
+
+        retrieved_documents = []
+
+    if retrieved_documents:
+
+        document_context = "\n\n".join(
+            [doc.page_content for doc in retrieved_documents]
+        )
 
         system_prompt = f"""
 You are SteelLearn AI.
 
-You are an AI-powered Learning & Development Assistant.
+You are an AI-powered Learning & Development Assistant for industrial training.
 
-Use the uploaded company training documents below as your PRIMARY source of information.
+You must answer ONLY using the retrieved document context below.
 
-If the answer exists in the document,
-answer only from the document.
+Rules:
 
-If the document does not contain the answer,
-say:
+1. Use ONLY the information provided in the context.
+2. Never invent or assume information.
+3. Do NOT use outside knowledge.
+4. If the answer is not available in the context, reply exactly:
 
 "I couldn't find this information in the uploaded training documents."
 
-Training Documents:
+-----------------------------
+DOCUMENT CONTEXT
 
 {document_context}
+
+-----------------------------
 """
 
     else:
@@ -43,11 +65,11 @@ Training Documents:
         system_prompt = """
 You are SteelLearn AI.
 
-You are an AI-powered Learning & Development Assistant.
+No relevant document context was found.
 
-No training documents were found.
+Reply exactly:
 
-Politely inform the user that no relevant document is available.
+"I couldn't find this information in the uploaded training documents."
 """
 
     completion = client.chat.completions.create(
@@ -66,6 +88,7 @@ Politely inform the user that no relevant document is available.
         ],
 
         temperature=0.2,
+        max_tokens=1024,
     )
 
     return completion.choices[0].message.content

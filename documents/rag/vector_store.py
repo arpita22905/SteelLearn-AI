@@ -29,19 +29,28 @@ class VectorStore:
         self.embedding_model = _embedding_model
 
     def create_vector_store(self, chunks):
-        """
-        Create a new Chroma vector database.
-        """
 
-        global _vector_db
+        if os.path.exists(self.persist_directory):
 
-        _vector_db = Chroma.from_documents(
-            documents=chunks,
-            embedding=self.embedding_model,
-            persist_directory=self.persist_directory,
-        )
+           print("Existing vector database found.")
 
-        return _vector_db
+           vector_db = self.load_vector_store()
+
+           vector_db.add_documents(chunks)
+
+           print("New document added to vector database.")
+
+        else:
+
+           print("Creating new vector database.")
+
+           vector_db = Chroma.from_documents(
+              documents=chunks,
+              embedding=self.embedding_model,
+              persist_directory=self.persist_directory,
+            )
+
+        return vector_db
 
     def load_vector_store(self):
         """
@@ -65,15 +74,4 @@ class VectorStore:
 
         return _vector_db
 
-    def clear_vector_store(self):
-        """
-        Delete existing vector database.
-        """
-
-        global _vector_db
-
-        if os.path.exists(self.persist_directory):
-
-            shutil.rmtree(self.persist_directory)
-
-        _vector_db = None
+    

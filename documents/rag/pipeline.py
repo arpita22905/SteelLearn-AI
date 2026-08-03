@@ -32,10 +32,8 @@ class RAGPipeline:
         chunks = self.splitter.split_documents(documents)
         print(f"Created {len(chunks)} chunks.")
 
-        print("Clearing old vector database...")
-        self.vector_store.clear_vector_store()
+        print("Updating vector database...")
 
-        print("Creating Chroma vector database...")
         vector_db = self.vector_store.create_vector_store(chunks)
 
         print("RAG pipeline built successfully.\n")
